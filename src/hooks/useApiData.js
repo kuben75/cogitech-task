@@ -6,6 +6,9 @@ import {
     calculateAverageComments} from "../utils/dataTransformers.js";
 import {useEffect, useState} from "react";
 import {API_BASE_URL} from "../constants/api.js";
+import {fetchJson} from "../utils/apiClient.js";
+
+
 
 export const useApiData = () => {
     const [data, setData] = useState(null);
@@ -13,39 +16,15 @@ export const useApiData = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        let isMounted = true;
+        const controller = new AbortController();
 
         const fetchData = async () => {
             try {
-                setLoading(true);
-
-                const [usersRes, postRes, commentsRes, todosRes] = await Promise.all([
-                    fetch(`${API_BASE_URL}/users`),
-                    fetch(`${API_BASE_URL}/posts`),
-                    fetch(`${API_BASE_URL}/comments`),
-                    fetch(`${API_BASE_URL}/todos`),
-                ]);
-
-                if(!usersRes.ok || !postRes.ok || !commentsRes.ok || !todosRes.ok) {
-                    if (isMounted) {
-                        setError("Błąd podczas pobierania danych z API.");
-                    }
-                    return;
-                }
-
-                const users = await usersRes.json();
-                const posts = await postRes.json();
-                const comments = await commentsRes.json();
-                const todos = await todosRes.json();
-                console.log("users: ", users);
-                console.log("posts: ", posts);
-                console.log("comments: ", comments);
-                console.log("todos: ", todos);
-
-                if (!isMounted) {
-                    return;
-                }
-
+                const [users, posts, comments, todos] = await Promise.all(
+                    ['/users', '/posts', '/comments', '/todos'].map(endpoint =>
+                        fetchJson(endpoint, controller.signal)
+                    )
+                );
                 setData({
                     userActivity: calculateUserActivity(users, posts),
                     todoStats: calculateTodoStats(todos),
@@ -56,21 +35,24 @@ export const useApiData = () => {
                 });
 
             } catch (e) {
-                if (isMounted) {
+                if (e.name !== 'AbortError') {
                     setError(e.message);
                 }
             }finally {
-                if (isMounted) {
+                if (!controller.signal.aborted) {
                     setLoading(false);
                 }
             }
         };
         void fetchData();
 
-        return () => {
-            isMounted = false;
-        }
+        return () => controller.abort();
 
     }, []);
-    return {data, loading, error};
+    const refetch = () => {
+        setLoading(true);
+        setError(null);
+    };
+
+    return {data, loading, error, refetch};
 }
