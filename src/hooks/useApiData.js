@@ -5,10 +5,7 @@ import {
     getTop5CommentedPosts,
     calculateAverageComments} from "../utils/dataTransformers.js";
 import {useEffect, useState} from "react";
-import {API_BASE_URL} from "../constants/api.js";
 import {fetchJson} from "../utils/apiClient.js";
-
-
 
 export const useApiData = () => {
     const [data, setData] = useState(null);

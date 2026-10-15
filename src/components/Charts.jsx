@@ -7,7 +7,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend,
 
 export const UserActivityChart = ({data}) => {
     const chartData = {
-        labels: data.map(item => item.name.split(' ')[0]),
+        labels: data.map(item => item.name),
         datasets: [{
             label: "Liczba postów",
             data: data.map(item => item.postsCount),
