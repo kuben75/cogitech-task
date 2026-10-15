@@ -11,6 +11,7 @@ export const useApiData = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [trigger, setTrigger] = useState(0);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -46,10 +47,11 @@ export const useApiData = () => {
 
         return () => controller.abort();
 
-    }, []);
+    }, [trigger]);
     const refetch = () => {
         setLoading(true);
         setError(null);
+        setTrigger(prev => prev + 1);
     };
 
     return {data, loading, error, refetch};

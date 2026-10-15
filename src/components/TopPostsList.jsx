@@ -26,6 +26,9 @@ export const TopPostsList = ({ posts }) => {
                     </div>
                 ))}
             </div>
+            <p className="text-xs text-gray-400 mt-4 text-center">
+                Dane pochodzą z API JSONPlaceholder więc każdy post ma dokładnie 5 komentarzy, więc wszystkie posty mają taką samą liczbę komentarzy.
+            </p>
         </div>
     );
 };
