@@ -37,6 +37,10 @@ export const useApiData = () => {
                 const posts = await postRes.json();
                 const comments = await commentsRes.json();
                 const todos = await todosRes.json();
+                console.log("users: ", users);
+                console.log("posts: ", posts);
+                console.log("comments: ", comments);
+                console.log("todos: ", todos);
 
                 if (!isMounted) {
                     return;
