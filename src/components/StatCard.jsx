@@ -2,7 +2,7 @@
 export const StatCard = ({ title, value, icon: Icon, colorClass = "text-blue-600 bg-blue-50" }) => {
     return (
         <div className="bg-white p-6 rounded-sm border border-gray-100 flex items-center space-x-4">
-            <div className={`p-3 rounded-lg ${colorClass}`}>
+            <div className={`p-3 rounded-sm ${colorClass}`}>
                 <Icon size={24} />
             </div>
             <div>

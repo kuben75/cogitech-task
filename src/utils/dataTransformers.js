@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Zlicza elementy pogrupowane po wskazanym kluczu używając struktury Map dla optymalizacji O(n).
  * @param {Array} items - Tablica obiektów do pogrupowania
@@ -69,3 +67,20 @@ export const calculateAverageComments = (postsCount, commentsCount) => {
     return (commentsCount / postsCount).toFixed(1);
 };
 
+
+/**
+ * Oblicza status zadań TODO dla każdego użytkownika z osobna.
+ * @param {Array} users Tablica użytkowników
+ * @param {Array} todos Tablica zadań
+ * @returns {Array} Tablica z danymi do wykresu skumulowanego
+ */
+export const calculateTodosPerUser = (users, todos) => {
+    const completedCounts = countBy(todos.filter(t => t.completed), 'userId');
+    const pendingCounts = countBy(todos.filter(t => !t.completed), 'userId');
+
+    return users.map(u => ({
+        username: u.username,
+        completed: completedCounts.get(u.id) ?? 0,
+        pending: pendingCounts.get(u.id) ?? 0
+    }));
+};

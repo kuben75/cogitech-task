@@ -1,9 +1,9 @@
-"use strict";
 import {
     calculateUserActivity,
     calculateTodoStats,
     getTop5CommentedPosts,
-    calculateAverageComments} from "../utils/dataTransformers.js";
+    calculateAverageComments, calculateTodosPerUser
+} from "../utils/dataTransformers.js";
 import {useEffect, useState} from "react";
 import {fetchJson} from "../utils/apiClient.js";
 
@@ -25,6 +25,7 @@ export const useApiData = () => {
                 setData({
                     userActivity: calculateUserActivity(users, posts),
                     todoStats: calculateTodoStats(todos),
+                    todosPerUser: calculateTodosPerUser(users, todos),
                     top5Posts: getTop5CommentedPosts(posts, comments),
                     averageComments: calculateAverageComments(posts.length, comments.length),
                     totalUsers: users.length,

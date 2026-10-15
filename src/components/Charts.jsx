@@ -39,3 +39,35 @@ export const TodoStatsChart = ({data}) => {
 
     return <Pie data={chartData} options={options} />;
 }
+
+export const TodoPerUserChart = ({ data }) => {
+    const chartData = {
+        labels: data.map(item => item.username),
+        datasets: [
+            {
+                label: 'Zakończone',
+                data: data.map(item => item.completed),
+                backgroundColor: 'rgba(34, 197, 94, 0.8)',
+            },
+            {
+                label: 'Oczekujące',
+                data: data.map(item => item.pending),
+                backgroundColor: 'rgba(239, 68, 68, 0.8)',
+            }
+        ]
+    };
+
+    const options = {
+        responsive: true,
+        scales: {
+            x: { stacked: true },
+            y: { stacked: true }
+        },
+        plugins: {
+            title: { display: true, text: 'Zadania (TODO) wg Użytkowników' },
+            legend: { position: 'bottom' }
+        }
+    };
+
+    return <Bar data={chartData} options={options} />;
+};

@@ -2,7 +2,7 @@ import { Trophy } from 'lucide-react';
 
 export const TopPostsList = ({ posts }) => {
     return (
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+        <div className="bg-white p-6 rounded-sm border border-gray-100">
             <div className="flex items-center space-x-3 mb-6">
                 <Trophy size={24} className="text-yellow-500" />
                 <h2 className="text-xl font-bold text-gray-800">Top 5 najbardziej komentowanych postów</h2>
@@ -20,7 +20,7 @@ export const TopPostsList = ({ posts }) => {
                                 {post.title}
                             </p>
                         </div>
-                        <div className="shrink-0 bg-white border border-gray-200 px-3 py-1 rounded-full shadow-sm">
+                        <div className="shrink-0 bg-white border border-gray-200 px-3 py-1 rounded-sm">
                             <span className="text-blue-600 font-bold text-sm">{post.commentsCount} kom.</span>
                         </div>
                     </div>

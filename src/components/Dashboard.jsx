@@ -1,5 +1,5 @@
 import {useApiData} from "../hooks/useApiData.js";
-import {TodoStatsChart, UserActivityChart} from "./Charts.jsx";
+import {TodoPerUserChart, TodoStatsChart, UserActivityChart} from "./Charts.jsx";
 import {StatCard} from "./StatCard.jsx";
 import {Users, FileText, MessageSquare, CheckCircle} from 'lucide-react';
 import {TopPostsList} from "./TopPostsList.jsx";
@@ -24,7 +24,7 @@ export const Dashboard = () => {
                 </div>
                 <button
                     onClick={refetch}
-                    className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow-sm hover:bg-blue-700 transition-colors font-medium"
+                    className="px-6 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-colors font-medium"
                 >
                     Spróbuj ponownie
                 </button>
@@ -55,6 +55,9 @@ export const Dashboard = () => {
                 <div className="bg-white p-6 rounded-sm border border-gray-100">
                     <TodoStatsChart data={data.todoStats} />
                 </div>
+            </div>
+            <div className="bg-white p-6 rounded-sm border border-gray-100 mb-8">
+                <TodoPerUserChart data={data.todosPerUser} />
             </div>
 
             <div className="mb-8">
